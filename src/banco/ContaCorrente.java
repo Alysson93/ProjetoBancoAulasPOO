@@ -1,20 +1,64 @@
 package banco;
 
-public class ContaCorrente extends Conta {
+public class ContaCorrente implements IConta {
 	
-	static final float TAXA_MANUTENCAO = 0.01f;
+	String numeroConta;
+	String agencia;
+	private float saldo;
+	boolean status;
+	String dataAbertura;
 	
-	public ContaCorrente(String numeroConta, String agencia, String nome, String cpf, String dataAbertura) {
-		super(numeroConta,agencia,nome,cpf,dataAbertura);
+	public ContaCorrente(String numeroConta, String agencia, String dataAbertura) {		
+		this.numeroConta = numeroConta;
+		this.agencia = agencia;
+		this.saldo = 0f;
+		this.status = true;
+		this.dataAbertura = dataAbertura;
 	}
 	
-	public void transferir(Conta destino, float valor) {
+	public float getSaldo() {
+		return this.saldo;
+	}
+	
+	public void depositar(float valor) {
+		if (valor > 0 && status) {
+			this.saldo += valor;
+		}
+	}
+	
+	public void sacar(float valor) {
+		if (valor+ valor*CUSTO_SACAR_CONTA_CORRENTE <= this.saldo && status) {
+			this.saldo -= (valor + valor*CUSTO_SACAR_CONTA_CORRENTE);
+		}
+	}
+
+	public void desativarConta() {
+		if (this.status) {
+			this.status = false;
+		}
+	}
+	
+	public void ativarConta() {
+		if (!this.status) {
+			this.status = true;
+		}
+	}
+	
+	public void transferir(IConta destino, float valor) {
 		if (destino instanceof ContaPoupanca || destino instanceof ContaInvestimento) {
-			this.sacar(valor + valor*Conta.TAXA_ADMIN);
+			this.sacar(valor + valor*IConta.TAXA_ADMIN);
 			destino.depositar(valor);
 		} else {
 			this.sacar(valor);
 			destino.depositar(valor);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "ContaCorrente [numeroConta=" + numeroConta + ", agencia=" + agencia + ", saldo=" + saldo + ", status="
+				+ status + ", dataAbertura=" + dataAbertura + "]";
+	}
+	
+	
 }
