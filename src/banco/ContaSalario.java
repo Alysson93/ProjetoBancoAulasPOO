@@ -1,7 +1,10 @@
 package banco;
 
-public class ContaSalario implements IConta {
+import java.io.Serializable;
 
+public class ContaSalario implements IConta, Serializable {
+
+	private static final long serialVersionUID = 1L;
 	String numeroConta;
 	String agencia;
 	private float saldo;

@@ -1,20 +1,28 @@
 package banco;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class Cliente {
+public class ClienteJuridico implements ICliente, Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	String cpf;
 	String nome;
 	String dataNascimento;
 	private List<IConta> contas = new ArrayList<>();
 	private HashSet<String> telefones = new HashSet<>();
 	
-	public Cliente(String cpf,String nome, String dataNascimento) {
+	public ClienteJuridico(String cpf,String nome, String dataNascimento) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public ClienteJuridico(String cpf) {
+		this.cpf = cpf;
 	}
 	
 	public void adicionarConta(IConta c) {
@@ -73,7 +81,7 @@ public class Cliente {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		ClienteFisico other = (ClienteFisico) obj;
 		if (cpf == null) {
 			if (other.cpf != null)
 				return false;
@@ -81,5 +89,5 @@ public class Cliente {
 			return false;
 		return true;
 	}
-
+	
 }
