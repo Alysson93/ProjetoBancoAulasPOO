@@ -1,5 +1,7 @@
 package banco;
 
+import java.util.List;
+
 public interface ICliente {
 	
 	public void adicionarConta(IConta c);
@@ -11,5 +13,7 @@ public interface ICliente {
 	public void adicionarTelefone(String telefone);
 	
 	public void removerTelefone(String telefone);
+	
+	public List<IConta> getContas();
 	
 }

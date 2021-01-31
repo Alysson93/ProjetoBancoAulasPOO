@@ -2,8 +2,13 @@ package banco;
 
 import java.io.Serializable;
 
+import excecoes.SaldoInsuficienteException;
+
 public class ContaPoupanca implements IConta, Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	String numeroConta;
 	String agencia;
@@ -32,6 +37,8 @@ public class ContaPoupanca implements IConta, Serializable {
 	public void sacar(float valor) {
 		if (valor+valor*CUSTO_SACAR_CONTA_POUPANCA <= this.saldo && status) {
 			this.saldo -= (valor+valor*CUSTO_SACAR_CONTA_POUPANCA);
+		} else {
+			new SaldoInsuficienteException("Saldo indisponível");
 		}
 	}
 

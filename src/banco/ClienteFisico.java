@@ -90,4 +90,19 @@ public class ClienteFisico implements ICliente, Serializable{
 		return true;
 	}
 
+	@Override
+	public List<IConta> getContas() {
+		
+		return null;
+	}
+	
+	public IConta buscarContaInvestimento(String numeroConta) {
+		IConta conta = new ContaInvestimento(numeroConta);
+		if (contas.contains(conta)) {
+			int index = contas.indexOf(conta);
+			conta = contas.get(index);
+		}
+		return conta;
+	}
+
 }

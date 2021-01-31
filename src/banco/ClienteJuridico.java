@@ -9,20 +9,23 @@ public class ClienteJuridico implements ICliente, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String cpf;
-	String nome;
-	String dataNascimento;
+	String cnpj;
+	String razaoSocial;
+	String fantasia;
+	String email;
 	private List<IConta> contas = new ArrayList<>();
 	private HashSet<String> telefones = new HashSet<>();
-	
-	public ClienteJuridico(String cpf,String nome, String dataNascimento) {
-		this.cpf = cpf;
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
+
+	public ClienteJuridico(String cnpj, String razaoSocial, String fantasia, String email) {
+		super();
+		this.cnpj = cnpj;
+		this.razaoSocial = razaoSocial;
+		this.fantasia = fantasia;
+		this.email = email;
 	}
-	
-	public ClienteJuridico(String cpf) {
-		this.cpf = cpf;
+
+	public ClienteJuridico(String cnpj) {
+		this.cnpj = cnpj;
 	}
 	
 	public void adicionarConta(IConta c) {
@@ -57,19 +60,19 @@ public class ClienteJuridico implements ICliente, Serializable {
 		}
 	}
 	
+	
 
 	@Override
 	public String toString() {
-		return "Cliente [nome=" + nome + ", cpf=" + cpf + ", dataNascimento=" + dataNascimento + ", contas=" + contas + 
-				", telefones=" + telefones
-				+ "]";
+		return "ClienteJuridico [cnpj=" + cnpj + ", razaoSocial=" + razaoSocial + ", fantasia=" + fantasia + ", email="
+				+ email + ", contas=" + contas + ", telefones=" + telefones + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
 		return result;
 	}
 
@@ -81,13 +84,24 @@ public class ClienteJuridico implements ICliente, Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ClienteFisico other = (ClienteFisico) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
+		ClienteJuridico other = (ClienteJuridico) obj;
+		if (cnpj == null) {
+			if (other.cnpj != null)
 				return false;
-		} else if (!cpf.equals(other.cpf))
+		} else if (!cnpj.equals(other.cnpj))
 			return false;
 		return true;
 	}
+
+	@Override
+	public List<IConta> getContas() {
+		
+		return null;
+	}
+
+
+	
+
+
 	
 }

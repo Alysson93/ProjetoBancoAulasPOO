@@ -1,5 +1,7 @@
 package banco;
 
+import excecoes.SaldoInsuficienteException;
+
 public interface IConta {
 
 	public float TAXA_ADMIN = 0.02f;
@@ -13,9 +15,9 @@ public interface IConta {
 	
 	public void depositar(float valor);
 	
-	public void sacar(float valor);
+	public void sacar(float valor) throws SaldoInsuficienteException;
 	
-	public void transferir(IConta destino, float valor);
+	public void transferir(IConta destino, float valor) throws SaldoInsuficienteException;
 	
 	public void desativarConta();
 	

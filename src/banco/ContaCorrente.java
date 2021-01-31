@@ -2,9 +2,37 @@ package banco;
 
 import java.io.Serializable;
 
+import excecoes.SaldoInsuficienteException;
+
 public class ContaCorrente implements IConta, Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((numeroConta == null) ? 0 : numeroConta.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ContaCorrente other = (ContaCorrente) obj;
+		if (numeroConta == null) {
+			if (other.numeroConta != null)
+				return false;
+		} else if (!numeroConta.equals(other.numeroConta))
+			return false;
+		return true;
+	}
+
 	String numeroConta;
 	String agencia;
 	private float saldo;
@@ -32,6 +60,8 @@ public class ContaCorrente implements IConta, Serializable {
 	public void sacar(float valor) {
 		if (valor+ valor*CUSTO_SACAR_CONTA_CORRENTE <= this.saldo && status) {
 			this.saldo -= (valor + valor*CUSTO_SACAR_CONTA_CORRENTE);
+		} else {
+			new SaldoInsuficienteException("Saldo insuficiente");
 		}
 	}
 
@@ -47,7 +77,7 @@ public class ContaCorrente implements IConta, Serializable {
 		}
 	}
 	
-	public void transferir(IConta destino, float valor) {
+	public void transferir(IConta destino, float valor) throws SaldoInsuficienteException {
 		if (destino instanceof ContaPoupanca || destino instanceof ContaInvestimento) {
 			this.sacar(valor + valor*IConta.TAXA_ADMIN);
 			destino.depositar(valor);
